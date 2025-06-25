@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lluvia para Mi Princesa</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Segoe Script', cursive;
+      background-color: #e6ccff;
+      background-image: url("fondo.jpg");
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    .lluvia, .flor {
+      position: absolute;
+      top: -50px;
+      font-size: 1.8rem;
+      animation: caer 5s linear infinite;
+      user-select: none;
+      white-space: nowrap;
+      pointer-events: auto;
+    }
+
+    .lluvia:hover, .flor:hover {
+      animation-play-state: paused;
+      transform: scale(1.3) rotate(3deg);
+      text-shadow: 0 0 10px white, 0 0 20px pink;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    @keyframes caer {
+      0% { transform: translateY(-50px); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .brillito {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: parpadeo 1.5s ease-out forwards;
+    }
+
+    @keyframes parpadeo {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(2); }
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  const coloresRomanticos = [
+    '#e91e63', '#f06292', '#f44336', '#ff80ab',
+    '#ffb6c1', '#ff69b4', '#ff8a65', '#ba68c8', '#ec407a'
+  ];
+
+  const frases = [
+    "mi princesa cachetona 💕",
+    "te amo 💖"
+  ];
+
+  function crearFrase() {
+    const palabra = document.createElement('div');
+    palabra.classList.add('lluvia');
+    palabra.innerText = frases[Math.floor(Math.random() * frases.length)];
+    palabra.style.left = Math.random() * window.innerWidth + 'px';
+    palabra.style.animationDuration = (3 + Math.random() * 3) + 's';
+    palabra.style.color = coloresRomanticos[Math.floor(Math.random() * coloresRomanticos.length)];
+    document.body.appendChild(palabra);
+    setTimeout(() => palabra.remove(), 6000);
+  }
+
+  function crearFlor() {
+    const flor = document.createElement('div');
+    flor.classList.add('flor');
+    flor.innerText = '🌸';
+    flor.style.left = Math.random() * window.innerWidth + 'px';
+    flor.style.fontSize = (1.5 + Math.random() * 1.5) + 'rem';
+    flor.style.animationDuration = (4 + Math.random() * 3) + 's';
+    document.body.appendChild(flor);
+    setTimeout(() => flor.remove(), 7000);
+  }
+
+  function crearBrillitosIniciales() {
+    for (let i = 0; i < 100; i++) {
+      const brillito = document.createElement('div');
+      brillito.classList.add('brillito');
+      brillito.style.left = Math.random() * window.innerWidth + 'px';
+      brillito.style.top = Math.random() * window.innerHeight + 'px';
+      brillito.style.animationDuration = (1 + Math.random() * 3) + 's';
+      document.body.appendChild(brillito);
+    }
+  }
+
+  function crearBrillitoEnMouse(x, y) {
+    const brillito = document.createElement('div');
+    brillito.classList.add('brillito');
+    brillito.style.left = (x - 2) + 'px';
+    brillito.style.top = (y - 2) + 'px';
+    document.body.appendChild(brillito);
+    setTimeout(() => brillito.remove(), 1500);
+  }
+
+  setInterval(crearFrase, 300);
+  setInterval(crearFlor, 350);
+  crearBrillitosIniciales();
+
+  document.addEventListener('mousemove', e => {
+    crearBrillitoEnMouse(e.clientX, e.clientY);
+  });
+</script>
+
+</body>
+</html>
